@@ -5,3 +5,6 @@ client = Client(
 )
 result = client.service.NumberToWords(5)
 print(result)
+
+result = client.service.NumberToDollars(2)
+print(result)
