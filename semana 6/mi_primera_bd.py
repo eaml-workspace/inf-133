@@ -2,7 +2,10 @@ import sqlite3
 
 conn =sqlite3.connect("instituto.db")#crea coneccion a la base de datos
 #CREACION DE LA TABLA CARRERA
-conn.execute(#USAR LAS PALABRAS CLAVES en mayusculas create table, integer, text, integer <= definimos el tipo de datos
+
+#para que los datos persistan hay que hacer COMMIT, para que se guarde los cambios y se guarden los datos
+try:
+    conn.execute(#USAR LAS PALABRAS CLAVES en mayusculas create table, integer, text, integer <= definimos el tipo de datos
     """
     CREATE TABLE CARRERAS
     (id INTEGER PRIMARY KEY,
@@ -10,6 +13,8 @@ conn.execute(#USAR LAS PALABRAS CLAVES en mayusculas create table, integer, text
     duracion INTEGER NOT NULL);
     """
 )
+except sqlite3.OperationalError:
+    print("La carrera no existe")
 conn.execute(
     """
     INSERT INTO CARRERAS(nombre, duracion)
@@ -30,7 +35,8 @@ for row in cursor:
     print(row)
 
 #CREACION DE LA TABLA ESTUDIANTES
-conn.execute(#se crea la tabla ESTUDIANTES
+try:
+    conn.execute(#se crea la tabla ESTUDIANTES
     """
     CREATE TABLE ESTUDIANTES
     (id INTEGER PRIMARY KEY,
@@ -39,6 +45,8 @@ conn.execute(#se crea la tabla ESTUDIANTES
     fecha_nacimiento DATE NOT NULL);
     """
 )
+except sqlite3.OperationalError:
+    print("El estudiante no existe")
 
 conn.execute(
     """
@@ -59,7 +67,8 @@ for row in cursor:
 
 #CREACION DE LA TABLA MATRICULAS
 #crear matriculas, por convencion si se jala un dato de otra tabla se escribe el nombre de la tabla en singular
-conn.execute(
+try:
+    conn.execute(
     """
     CREATE TABLE MATRICULA
     (id INTEGER PRIMARY KEY,
@@ -70,7 +79,8 @@ conn.execute(
     FOREIGN KEY (carrera_id) REFERENCES CARRERAS(id));
     """
 )
-
+except sqlite3.OperationalError:
+    print("La matricula no existe")
 # Insertar datos de matricula
 conn.execute(
     """
@@ -137,6 +147,9 @@ cursor = conn.execute(
 
 for row in cursor:
     print(row)
+
+# Confirmar cambios
+conn.commit()
 
 #Cerrar conexión
 conn.close()

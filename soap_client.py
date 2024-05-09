@@ -8,5 +8,5 @@ print(result)
 result = client.service.CadenaPalindromo(cadena="Emanuel")
 print(result)
 
-result = client.service.CadenaPalindromo(numero1=1, numero2=2)
+result = client.service.SumaDosNumeros(numero1=1, numero2=2)
 print(result)

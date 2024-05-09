@@ -1,6 +1,6 @@
 import requests
 card_number= "BT1-010"
-url=("http://digimoncard.io/api-public/search.php?card=(card_number)")
+url= f"https://digimoncard.io/api-public/search.php?card={card_number}"
 
 response= requests.request(
     method="GET",

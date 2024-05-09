@@ -5,37 +5,45 @@ import sqlite3
 conn = sqlite3.connect("personal.db")
 
 try:
-    conn.execute("""
+    conn.execute(
+        """
         CREATE TABLE DEPARTAMENTOS
         (id INTEGER PRIMARY KEY,
         nombre TEXT NOT NULL,
         fecha_creacion TEXT NOT NULL);
-    """)
+        """
+    )
 except sqlite3.OperationalError:
     print("DEPARTAMENTOS no existe")
 
 try:
-    conn.execute("""
+    conn.execute(
+        """
         CREATE TABLE CARGOS
         (id INTEGER PRIMARY KEY,
         nombre TEXT NOT NULL,
         nivel TEXT NOT NULL,
         fecha_creacion TEXT NOT NULL);
-    """)
+        """
+    )
 except sqlite3.OperationalError:
     print("CARGOS no existe")
 
 try:
-    conn.execute("""
+    conn.execute(
+        """
         CREATE TABLE EMPLEADOS
         (id INTEGER PRIMARY KEY,
         nombres TEXT NOT NULL,
         apellido_paterno TEXT NOT NULL,
         apellido_materno TEXT NOT NULL,
         fecha_contratacion DATE NOT NULL,
+        departamento_id INTEGER NOT NULL,
+        cargo_id INTEGER NOT NULL,
         FOREIGN KEY (departamento_id) REFERENCES DEPARTAMENTOS(id),
         FOREIGN KEY (cargo_id) REFERENCES CARGOS(id));
-    """)
+        """
+    )
 except sqlite3.OperationalError:
     print("EMPLEADOS no existe")
 
@@ -47,6 +55,7 @@ try:
         fecha_inicio DATE NOT NULL,
         fecha_fin DATE NOT NULL,
         fecha_creacion TEXT NOT NULL,
+        empleado_id INTEGER NOT NULL,
         FOREIGN KEY (empleado_id) REFERENCES EMPLEADOS(id));
     """)
 except sqlite3.OperationalError:
@@ -151,18 +160,19 @@ for row in cursor:
     print(row)
 
 ## update
+
 conn.execute(
     """
-    UPDATE EMPLEADOS
-    SET EMPLEADOS.cargo_id = 3
+    UPDATE SALARIOS
+    SET salario = 3600
     WHERE id = 2
     """
 )
 
 conn.execute(
     """
-    UPDATE SALARIOS
-    SET salario = 3600
+    UPDATE EMPLEADOS
+    SET EMPLEADOS.cargo_id=3
     WHERE id = 2
     """
 )

@@ -1,3 +1,4 @@
+##Set-ExecutionPolicy Unrestricted -Scope Process
 from http.server import HTTPServer
 from pysimplesoap.server import SoapDispatcher, SOAPHandler
 
@@ -6,7 +7,7 @@ def saludar(nombre):
 
 def suma(numero1,numero2):
     c=numero1+numero2
-    return "La suma es: {}".format(c)
+    return c
 
 def palindromo(cadena):
     cadena = cadena.lower().replace(" ","")
